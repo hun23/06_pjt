@@ -53,3 +53,4 @@ def update(request, pk):
         'form': form,
     }
     return render(request, 'movies/update.html', context)
+
