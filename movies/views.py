@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Movie, Comment
 from .forms import MovieForm, CommentForm
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods
 
-
+@require_http_methods(['POST'])
 def index(request):
     movies = Movie.objects.all()
     context = {
@@ -11,7 +11,7 @@ def index(request):
     }
     return render(request, 'movies/index.html', context)
 
-
+@require_http_methods(['GET', 'POST'])
 def create(request):
     if request.method == 'POST':
         form = MovieForm(request.POST)
