@@ -42,12 +42,15 @@ def detail(request, pk):
 @require_http_methods(['POST'])
 def delete(request, pk):
     movie = Movie.objects.get(pk=pk)
-    movie.delete()
+    if request.user == movie.user:
+        movie.delete()
     return redirect('movies:index')
 
 @require_http_methods(['GET','POST'])
 def update(request, pk):
     movie = Movie.objects.get(pk=pk)
+    if request.user != movie.user:
+        return render(request, 'movies/index.html')
     if request.method == 'POST':
         form = MovieForm(request.POST, instance=movie)
         if form.is_valid():
