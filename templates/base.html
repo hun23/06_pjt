@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +10,31 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="container">
-    {% block content %}
-    {% endblock content %}
+  <div id="container">
+    <div id="nav">
+        {% if user.is_authenticated %}  
+        <!--로그인 O-->
+        <h3 id="user-hello"><i>Hello {{user}}</i></h3>
+        <a href="{% url 'accounts:update' %}">회원 정보 수정</a>
+        <a href="{% url 'accounts:logout' %}">로그아웃</a>
+        <form action="{% url 'accounts:delete' %}" method='POST'>
+          {% csrf_token %}
+          <input type="submit" value="회원탈퇴">
+        </form>   
+        <a href="{% url 'accounts:profile' user.username %}">내 프로필</a>
+        {% else %} 
+        <!--로그인 X-->
+          <a href="{% url 'accounts:login' %}">Login</a>
+          <a href="{% url 'accounts:signup' %}">Signup</a>
+        {% endif %}
+      
+    </div>
+    <hr>
+
+    <div id="content">
+      {% block content %}
+      {% endblock content %}
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
-</html>
