@@ -90,6 +90,6 @@ def likes(request, movie_pk):
 
         else:
             movie.like_users.add(request.user) 
-        return redirect('moives:index') 
+        return redirect('movies:index') 
     
     return redirect('movies:login')  
