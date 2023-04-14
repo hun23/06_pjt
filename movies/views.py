@@ -3,7 +3,6 @@ from .models import Movie, Comment
 from .forms import MovieForm, CommentForm
 from django.views.decorators.http import require_http_methods
 
-@require_http_methods(['POST'])
 def index(request):
     movies = Movie.objects.all()
     context = {
