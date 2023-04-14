@@ -11,6 +11,8 @@ from .models import User
 # Create your views here.
 @require_http_methods(['GET', 'POST'])
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('movies:index')
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():

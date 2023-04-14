@@ -70,8 +70,11 @@ def update(request, pk):
 def comments_create(request, pk):
     movie = Movie.objects.get(pk=pk)
     comment_form = CommentForm(request.POST)
+    parent_pk = request.POST.get('parent_pk')
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
+        if parent_pk:
+            comment.parent = Comment.objects.get(pk=parent_pk)
         comment.movie = movie
         # 댓글 작성시 작성자 정보가 함께 저장
         comment.user = request.user
