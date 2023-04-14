@@ -1,22 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{username}}'s Profile</h1>
+<h1>{{user.username}}'s Profile</h1>
+<hr>
 
 {% comment %} print follow/following {% endcomment %}
 <span>Follows: {{ followings|length }}</span>
-{% for following in followings %}
-	{{ following }}
-{% endfor %}
+<ul>
+	{% for following in followings %}
+		<li>
+			{{ following }}
+		</li>
+	{% endfor %}
+</ul>
+<hr>
 
+{% comment %} show cnt of Followers & All Followers{% endcomment %}
 <span>Followers: {{ followers|length }}</span>
-{% for follower in followers %}
-	{{ follower }}
-{% endfor %}
+<ul>
+	{% for follower in followers %}
+		<li>
+			{{ follower }}
+		</li>
+	{% endfor %}
+</ul>
+<hr>
 
-{% comment %} print like movies {% endcomment %}
+{% comment %} show cnt of Followings & All Followings{% endcomment %}
 <span>Likes these movies:</span>
-{% for movie in movies %}
-	{{ movie }}
-{% endfor %}
+<ul>
+	{% for movie in movies %}
+	<li>
+		{{ movie }}
+	</li>
+	{% endfor %}
+</ul>
+<hr>
 {% endblock content %}
