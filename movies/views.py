@@ -41,7 +41,7 @@ def delete(request, pk):
     movie.delete()
     return redirect('movies:index')
 
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(['GET','POST'])
 def update(request, pk):
     movie = Movie.objects.get(pk=pk)
     if request.method == 'POST':
@@ -58,14 +58,38 @@ def update(request, pk):
     return render(request, 'movies/update.html', context)
 
 # ===== 댓글 ======
+# 1) 댓글 작성
 @require_http_methods(['POST'])
-def comments_create(request):
-    pass
+def comments_create(request, pk):
+    movie = Movie.objects.get(pk=pk)
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.movie = movie
+        # 댓글 작성시 작성자 정보가 함께 저장
+        comment.user = request.user
+        comment.save()
+    return redirect('movies:detail', movie.pk)
 
+# 2) 댓글 삭제
 @require_http_methods(['POST'])
-def comments_delete(request):
-    pass
+def comments_delete(request, pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user: 
+        comment.delete()
+    return redirect('movies:detail', pk)
 
+# 3) like
 @require_http_methods(['POST'])
-def likes(request):
-    pass
+def likes(request, movie_pk):
+    if request.user.is_authenticated: 
+        movie = Movie.objects.get(pk=movie_pk)
+        
+        if movie.like_users.filter(pk=request.user.pk).exists():
+            movie.like_users.remove(request.user)  
+
+        else:
+            movie.like_users.add(request.user) 
+        return redirect('movies:index') 
+    
+    return redirect('movies:login')  
