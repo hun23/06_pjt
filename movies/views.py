@@ -30,8 +30,12 @@ def create(request):
 @require_http_methods(['GET'])
 def detail(request, pk):
     movie = Movie.objects.get(pk=pk)
+    comment_form = CommentForm()
+    comments = movie.comment_set.all()
     context = {
         'movie': movie,
+        'comment_form' : comment_form,
+        'comments' : comments,
     }
     return render(request, 'movies/detail.html', context)
 
@@ -73,11 +77,11 @@ def comments_create(request, pk):
 
 # 2) 댓글 삭제
 @require_http_methods(['POST'])
-def comments_delete(request, pk, comment_pk):
+def comments_delete(request, movie_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     if request.user == comment.user: 
         comment.delete()
-    return redirect('movies:detail', pk)
+    return redirect('movies:detail', movie_pk)
 
 # 3) like
 @require_http_methods(['POST'])
