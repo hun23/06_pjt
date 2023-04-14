@@ -81,12 +81,12 @@ def change_password(request):
 
 @require_safe
 def profile(request, username):
-    user = get_user_model().objects.get(username=username)
-    followings = user.followings.all()
-    followers = user.followers.all()
-    movies = user.like_movies.all()
+    person = get_user_model().objects.get(username=username)
+    followings = person.followings.all()
+    followers = person.followers.all()
+    movies = person.like_movies.all()
     context = {
-        'user': user,
+        'person': person,
         'followings': followings,
         'followers': followers,
         'movies': movies,
