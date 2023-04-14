@@ -5,7 +5,7 @@
 <hr>
 
 {% comment %} print follow/following {% endcomment %}
-<span>Follows: {{ followings|length }}</span>
+<h4>Follows: {{ followings|length }}</h4>
 <ul>
 	{% for following in followings %}
 		<li>
@@ -16,7 +16,7 @@
 <hr>
 
 {% comment %} show cnt of Followers & All Followers{% endcomment %}
-<span>Followers: {{ followers|length }}</span>
+<h4>Followers: {{ followers|length }}</h4>
 <ul>
 	{% for follower in followers %}
 		<li>
@@ -27,7 +27,7 @@
 <hr>
 
 {% comment %} show cnt of Followings & All Followings{% endcomment %}
-<span>Likes these movies:</span>
+<h4>Likes these movies:</h4>
 <ul>
 	{% for movie in movies %}
 	<li>
@@ -36,4 +36,8 @@
 	{% endfor %}
 </ul>
 <hr>
+
+<a href="{% url 'movies:index' %}">to main page</a>
+<hr>
+
 {% endblock content %}
