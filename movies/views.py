@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Movie
-from .forms import MovieForm
+from .models import Movie, Comment
+from .forms import MovieForm, CommentForm
+from django.views.decorators.http import require_POST
 
 
 def index(request):
@@ -54,3 +55,14 @@ def update(request, pk):
     }
     return render(request, 'movies/update.html', context)
 
+# ===== 댓글 ======
+def comments_create(request):
+    pass
+
+
+def comments_delete(request):
+    pass
+
+
+def likes(request):
+    pass
