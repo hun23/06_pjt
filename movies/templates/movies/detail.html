@@ -7,6 +7,19 @@
     <h5>{{ movie.title }}</h5>
     <p>{{ movie.description }}</p>
   </div>
+  <a href="{% url 'movies:update' %}">UPDATE</a>
+  <a href="{% url 'movies:delete' %}">DELETE</a>
   <a href="{% url 'movies:index' %}">BACK</a>
   <hr>
+  <h5>댓글 목록</h5>
+  {% if comments %}
+    <p><b></b></p>
+  {% endif %}
+  <hr>
+  <!--댓글 작성-->
+  <form action="{% url 'movies:comments_create' movie.pk %}" method='POST'>
+    {% csrf_token %}
+    {{comment_form}}
+    <input type="submit" value="제출">
+  </form>
 {% endblock  %}
