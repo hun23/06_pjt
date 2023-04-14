@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Movie, Comment
 from .forms import MovieForm, CommentForm
 from django.views.decorators.http import require_http_methods
+
 
 @require_http_methods(['GET'])
 def index(request):
@@ -12,6 +14,7 @@ def index(request):
     return render(request, 'movies/index.html', context)
 
 @require_http_methods(['GET', 'POST'])
+@login_required()
 def create(request):
     if request.method == 'POST':
         form = MovieForm(request.POST)
@@ -28,6 +31,7 @@ def create(request):
     return render(request, 'movies/create.html', context)
 
 @require_http_methods(['GET'])
+@login_required()
 def detail(request, pk):
     movie = Movie.objects.get(pk=pk)
     comment_form = CommentForm()
@@ -40,6 +44,7 @@ def detail(request, pk):
     return render(request, 'movies/detail.html', context)
 
 @require_http_methods(['POST'])
+@login_required()
 def delete(request, pk):
     movie = Movie.objects.get(pk=pk)
     if request.user == movie.user:
@@ -47,6 +52,7 @@ def delete(request, pk):
     return redirect('movies:index')
 
 @require_http_methods(['GET','POST'])
+@login_required()
 def update(request, pk):
     movie = Movie.objects.get(pk=pk)
     if request.user != movie.user:
@@ -67,6 +73,7 @@ def update(request, pk):
 # ===== 댓글 ======
 # 1) 댓글 작성
 @require_http_methods(['POST'])
+@login_required()
 def comments_create(request, pk):
     movie = Movie.objects.get(pk=pk)
     comment_form = CommentForm(request.POST)
@@ -83,6 +90,7 @@ def comments_create(request, pk):
 
 # 2) 댓글 삭제
 @require_http_methods(['POST'])
+@login_required()
 def comments_delete(request, movie_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     if request.user == comment.user: 
@@ -91,6 +99,7 @@ def comments_delete(request, movie_pk, comment_pk):
 
 # 3) like
 @require_http_methods(['POST'])
+@login_required()
 def likes(request, movie_pk):
     if request.user.is_authenticated: 
         movie = Movie.objects.get(pk=movie_pk)

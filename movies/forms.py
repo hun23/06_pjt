@@ -11,4 +11,4 @@ class MovieForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ('movie', 'user',)
+        exclude = ('movie', 'user', 'parent',)
