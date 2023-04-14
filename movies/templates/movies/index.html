@@ -7,9 +7,9 @@
   {% for movie in movies %}
     <a href="{% url 'movies:detail' movie.pk %}"><p>{{ movie.title }}</p></a>
     <!--좋아요 버튼-->
-    <form action="{% url 'articles:likes' article.pk %}" method='POST'>
+    <form action="{% url 'movies:likes' movie.pk %}" method='POST'>
       {% csrf_token %}
-      {% if request.user in article.like_users.all %}  
+      {% if request.user in movie.like_users.all %}  
         <input type="submit" value="좋아요 취소">  <!--좋아요가 되어 있으면 좋아요 취소-->
       {% else %}
         <input type="submit" value="좋아요">
