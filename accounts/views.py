@@ -15,7 +15,7 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('accounts:index')
+            return redirect('movies:index')
     else:
         form = AuthenticationForm()
     context = {
@@ -71,7 +71,7 @@ def change_password(request):
             update_session_auth_hash(request, form.user)
             return redirect('movies:index')
     else:
-        form = PasswordChangeForm(instance=request.user)
+        form = PasswordChangeForm(request.user)
     context = {
         'form': form
     }
