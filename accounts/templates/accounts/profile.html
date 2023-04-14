@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{username}}'s Profile</h1>
+
+{% comment %} print follow/following {% endcomment %}
+<span>Follows: {{ followings|length }}</span>
+{% for following in followings %}
+	{{ following }}
+{% endfor %}
+
+<span>Followers: {{ followers|length }}</span>
+{% for follower in followers %}
+	{{ follower }}
+{% endfor %}
+
+{% comment %} print like movies {% endcomment %}
+<span>Likes these movies:</span>
+{% for movie in movies %}
+	{{ movie }}
+{% endfor %}
+{% endblock content %}
